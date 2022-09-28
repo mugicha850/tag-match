@@ -10,6 +10,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="wrapper">
+      <header>
+        <%= render "shared/header" %>
+      </header>
+      <div id="container">
+        <%= yield %>
+      </div>
   </body>
 </html>
