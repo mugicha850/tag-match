@@ -15,13 +15,3 @@
   </ul>
 </div>
 
-<header>
-  <span class="logo-mark">TAG MATCH</span>
-  <%=
-    if current_external_coach
-      link_to "ログアウト", :external_coach_session, method: :delete
-    else
-      link_to "ログイン", :external_coach_login
-    end
-  %>
-</header>

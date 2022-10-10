@@ -1,4 +1,4 @@
-class ExternalCoach::HomeController < ApplicationController
+class ExternalCoach::HomeController < ExternalCoach::Base
   def index
     render action: "index"
   end
