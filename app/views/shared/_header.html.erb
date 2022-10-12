@@ -17,6 +17,8 @@
 
 <header>
   <span class="logo-mark">TAG MATCH</span>
+  <%= content_tag(:span, flash.notice, class: "notice") if flash.notice %>
+  <%= content_tag(:span, flash.alert, class: "alert") if flash.alert %>
   <%=
     if current_external_coach
       link_to "ログアウト", :external_coach_session, method: :delete
