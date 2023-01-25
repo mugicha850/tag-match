@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title><%= document_title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,7 +13,7 @@
   <body>
     <div id="wrapper">
       <header>
-        <%= render "shared/header" %>
+        <%= render "external_coach/shared/header" %>
       </header>
       <div id="container">
         <%= yield %>

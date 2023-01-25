@@ -1,8 +1,10 @@
 module ApplicationHelper
-  def page_title
-    title = "Morning Glory"
-    title = @page_title + " - " + title if @page_title
-    title
+  def document_title
+    if @title.present?
+      "#{@title} - Tag Match"
+    else
+      "Tag Match"
+    end
   end
 
   def menu_link_to(text, external_coach_path, options = {})
