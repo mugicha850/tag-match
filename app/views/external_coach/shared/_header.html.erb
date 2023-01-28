@@ -46,71 +46,43 @@
   </ul>
 </div>
 
-<header>
-  <span class="logo-mark">TAG MATCH</span>
-  <%= content_tag(:span, flash.notice, class: "notice") if flash.notice %>
-  <%= content_tag(:span, flash.alert, class: "alert") if flash.alert %>
-  <%=
-    if current_external_coach
-      link_to "ログアウト", :external_coach_session, method: :delete
-    else
-      link_to "ログイン", :external_coach_login
-    end
-  %>
-</header>
 
-<div class="min-h-screen bg-gray-100">
-  <nav class="bg-white py-2 md:py-4">
-    <div class="container px-4 mx-auto md:flex md:items-center">
-      <div class="flex justify-between items-center">
-        <a href="index.html" class="font-bold text-xl text-indigo-600">TailWindCssTest</a>
-        <button id="navbar-toggle" class="md:hidden border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 ">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
 
-      <div id="navbar-collapse" class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0">
-        <%= link_to "探す", :external_coach_root, class: "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600" %>
+<nav class="bg-white py-2 md:py-4">
+  <div class="container px-4 mx-auto md:flex md:items-center">
+    <div class="flex justify-between items-center">
+      <a href="index.html" class="font-bold text-xl text-indigo-600">TAG Match</a>
+      <button id="navbar-toggle" class="md:hidden border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 ">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="navbar-collapse" class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0">
+      <%= link_to "探す", :external_coach_root, class: "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600" %>
+      <% if current_external_coach %>
         <%= link_to "メッセージ", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
         <%= link_to "マイページ", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
         <%= link_to "プロフィール", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
         <%= link_to "フォローした部活", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
         <%= link_to "あとで見る部活", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
-        <%= link_to "よくある質問", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
-        
-        <%=
-          if current_external_coach
-            link_to "ログアウト", :external_coach_session, method: :delete, class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
-          else
-            link_to "ログイン", :external_coach_login, class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
-          end
-        %>        
-      </div>
-    </div>
-  </nav>
-
-  <div class="py-12">
-    <div class="flex justify-around">
-      <div class="w-5/6 mx-8 w-1/6 lg:px-4">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
-            内容
-          </div>
-        </div>
-      </div>
-
-      <div class="ml-32 w-5/6 mx-16 w-5/6">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
-            内容
-          </div>
-        </div>
-      </div>
+      <% end %>
+      <%= link_to "よくある質問", "#", class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300" %>
+      
+      <%=
+        if current_external_coach
+          link_to "ログアウト", :external_coach_session, method: :delete, class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+        else
+          link_to "ログイン", :external_coach_login, class: "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+        end
+      %>        
     </div>
   </div>
-</div>
+</nav>
+
+
+
 
 
 <script>
