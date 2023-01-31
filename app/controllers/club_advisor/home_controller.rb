@@ -1,4 +1,4 @@
-class ClubAdvisor::HomeController < ApplicationController
+class ClubAdvisor::HomeController < ClubAdvisor::Base
   def index
     render action: "index"
   end

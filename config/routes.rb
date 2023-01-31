@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     delete "session" => "sessions#destroy"
   end
 
-  root "external_coach/home#index"
+  #もういらなさそう↓
+  #root "external_coach/home#index"
 end
