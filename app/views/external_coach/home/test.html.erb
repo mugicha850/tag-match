@@ -10,4 +10,7 @@
         <a>ccc</a>
         <a>ddd</a>
     </ul>
+    <% form_with model: @external_coach, url: exter %>
 </header>
+
+<%= form_with model: @external_coach, url: external_coach_account_path(@external_coach) do |form| %>

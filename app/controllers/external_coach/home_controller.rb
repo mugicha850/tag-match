@@ -6,4 +6,8 @@ class ExternalCoach::HomeController < ExternalCoach::Base
   def test
     render action: "test"
   end
+
+  def test2
+    @test = test
+  end
 end

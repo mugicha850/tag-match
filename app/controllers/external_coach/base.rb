@@ -6,5 +6,10 @@ class ExternalCoach::Base < ApplicationController
     end
   end
   
+  # before_actionコールバックとして使うためlogin_requiredを作成
+  private def login_required
+    raise LoginRequired unless current_external_coach
+  end
+
   helper_method :current_external_coach
 end

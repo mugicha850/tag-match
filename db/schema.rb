@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_31_061750) do
+ActiveRecord::Schema.define(version: 2023_02_02_100301) do
 
   create_table "club_advisors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2023_01_31_061750) do
     t.bigint "area_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "birthday"
+    t.integer "sex", default: 1, null: false
     t.index ["area_id"], name: "index_external_coaches_on_area_id"
     t.index ["family_name_kana", "given_name_kana"], name: "index_external_coaches_on_family_name_kana_and_given_name_kana"
     t.index ["sport_id"], name: "index_external_coaches_on_sport_id"
