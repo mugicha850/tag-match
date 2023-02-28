@@ -9,7 +9,7 @@ class ExternalCoach::SessionsController < ExternalCoach::Base
   end
 
   def create
-    @form = ExternalCoach::LoginForm.new(params[:external_coach_login_form])
+    @form = ExternalCoach::LoginForm.new(login_form_params)
     if @form.email.present?
       external_coach =
         ExternalCoach.find_by("LOWER(email) = ?", @form.email.downcase)
@@ -27,6 +27,10 @@ class ExternalCoach::SessionsController < ExternalCoach::Base
       flash.now.alert = "メールアドレスまたはパスワードが正しくありません。"
       render action: "new"
     end
+  end
+
+  private def login_form_params
+    params.require(:external_coach_login_form).permit(:email, :password)
   end
 
   def destroy

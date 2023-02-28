@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   class Forbidden < ActionController::ActionControllerError; end
   class IpAddressRejected < ActionController::ActionControllerError; end
 
+  # 例外エラー処理クラスの定義
+  class LoginRequired < StandardError; end
+
   include ErrorHandlers if Rails.env.production?
 
   private def set_layout

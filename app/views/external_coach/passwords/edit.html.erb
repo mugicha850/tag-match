@@ -1,0 +1,24 @@
+<% @page_title = "パスワードの変更" %>
+<h1><%= @page_title %></h1>
+
+<div class="toolbar"><%= link_to "マイアカウントに戻る", :external_coach_account %></div>
+
+<%= form_with model: @change_password_form, url: external_coach_password_path(@external_coach), method: :patch do |form| %>
+
+  <table class="attr">
+    <tr>
+      <th><%= form.label :current_password %></th>
+      <td><%= form.password_field :current_password %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :new_password %></th>
+      <td><%= form.password_field :new_password %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :new_password_confirmation %></th>
+      <td><%= form.password_field :new_password_confirmation %></td>
+    </tr>
+  </table>
+
+  <div><%= form.submit "更新" %></div>
+<% end %>

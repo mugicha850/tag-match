@@ -6,6 +6,15 @@ Rails.application.routes.draw do
     delete "session" => "sessions#destroy"
 
     get "test" => "home#test"
+
+    # profileルーティング
+    get "profile" => "profiles#show"
+
+    # accountルーティング
+    resource :account, only: [:show, :edit, :update]
+
+    # passwordルーティング
+    resource :password, only: [:show, :edit, :update]
   end
 
   namespace :club_advisor do

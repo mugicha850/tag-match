@@ -1,0 +1,60 @@
+<% @page_title = "会員情報の編集" %>
+
+<h1><%= @page_title %></h1>
+
+<div class="toolbar"><%= link_to "会員の詳細に戻る", :external_coach_account %></div>
+
+<%= form_with model: @external_coach, url: external_coach_account_path(@external_coach) do |form| %>
+    <table class="attr">
+        <tr>
+            <th><%= form.label :sport_id %></th>
+            <td><%= form.text_field :sport_id, size: 8 %></td>
+        </tr>
+        <tr>
+            <th><%= form.label :family_name %></th>
+            <td><%= form.text_field :family_name %></td>
+        </tr>
+        <tr>
+            <th><%= form.label :given_name %></th>
+            <td><%= form.text_field :given_name %></td>
+        </tr>
+        <tr>
+            <th><%= ExternalCoach.human_attribute_name(:sex) %></th>
+            <td>
+            <%= form.radio_button :sex, 1 %>
+            <%= form.label :sex_1 %>
+            <%= form.radio_button :sex, 2 %>
+            <%= form.label :sex_2 %>
+            </td>
+        </tr>
+        <tr>
+            <th><%= form.label :birthday, for: "external_coach_birthday_1i" %></th>
+            <td><%= form.date_select :birthday,
+                    start_year: 1940, end_year: Time.current.year,
+                    use_month_numbers: true %></td>
+        </tr>
+        <tr>
+            <th><%= form.label :email %></th>
+            <td><%= form.text_field :email %></td>
+        </tr>
+        <% if @external_coach.new_record? %>
+            <tr>
+            <th><%= ExternalCoach.human_attribute_name(:password) %></th>
+            <td><%= form.text_field :password %></td>
+            </tr>
+        <% end %>
+        <% if controller.kind_of?(ExternalCoach::HomeController) %>
+            <tr>
+            <th><%= ExternalCoach.human_attribute_name(:external_coach) %></th>
+            <td>
+                <%= form.check_box :external_coach %>
+                <%= form.label :external_coach %>
+            </td>
+            </tr>
+        <% end %>
+        <tr>
+            <td><%= form.submit "更新" %></td>
+        </tr>
+    </table>    
+  <div></div>
+<% end %>
