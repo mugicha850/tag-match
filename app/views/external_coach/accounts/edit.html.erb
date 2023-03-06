@@ -43,7 +43,7 @@
             <td><%= form.text_field :password %></td>
             </tr>
         <% end %>
-        <% if controller.kind_of?(ExternalCoach::HomeController) %>
+        <% if controller.kind_of?(ExternalCoach::UsersController) %>
             <tr>
             <th><%= ExternalCoach.human_attribute_name(:external_coach) %></th>
             <td>
