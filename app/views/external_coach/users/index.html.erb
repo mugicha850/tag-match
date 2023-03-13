@@ -55,6 +55,7 @@
             data: { confirm: "本当に削除しますか？" } %>
     <% end %>
   </table>
+  <%= paginate @external_coach %>
 
   <div class="links">
     <%= link_to "新規登録", :new_external_coach_user %>

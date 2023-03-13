@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     # userルーティング
     resources :users
 
+    # 記事
+    resources :articles
+
     # accountルーティング
     resource :account, only: [:show, :edit, :update]
 

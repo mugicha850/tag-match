@@ -3,6 +3,7 @@
 
 <div class="toolbar"><%= link_to "マイアカウントに戻る", :external_coach_account %></div>
 
+<%= render "shared/errors", obj: @change_password_form %>
 <%= form_with model: @change_password_form, url: external_coach_password_path(@external_coach), method: :patch do |form| %>
 
   <table class="attr">

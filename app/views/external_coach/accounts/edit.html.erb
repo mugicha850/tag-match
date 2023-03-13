@@ -4,6 +4,8 @@
 
 <div class="toolbar"><%= link_to "会員の詳細に戻る", :external_coach_account %></div>
 
+<%= render "shared/errors", obj: @external_coach %>
+
 <%= form_with model: @external_coach, url: external_coach_account_path(@external_coach) do |form| %>
     <table class="attr">
         <tr>

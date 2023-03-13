@@ -1,6 +1,8 @@
 class ExternalCoach::UsersController < ExternalCoach::Base
   def index
     @external_coach = ExternalCoach.order(:family_name_kana, :given_name_kana)
+    # ページネーション
+    .page(params[:page]).per(15)
   end
 
   def show
