@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_02_100301) do
+ActiveRecord::Schema.define(version: 2023_03_07_105740) do
 
   create_table "club_advisors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 2023_02_02_100301) do
     t.index ["club_id"], name: "index_club_advisors_on_club_id"
     t.index ["school_id"], name: "index_club_advisors_on_school_id"
     t.index ["sport_id"], name: "index_club_advisors_on_sport_id"
+  end
+
+  create_table "ec_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body_1", null: false
+    t.text "body_2", null: false
+    t.text "body_3", null: false
+    t.datetime "released_at", null: false
+    t.datetime "expired_at"
+    t.boolean "external_coach_only", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "external_coaches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
