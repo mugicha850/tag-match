@@ -37,10 +37,14 @@
     </td>
   </tr>
   <tr>
-    <th><%= EcArticle.human_attribute_name(:external_coach_only) %></th>
+    <th><%= CaArticle.human_attribute_name(:external_coach_only) %></th>
     <td>
       <%= form.check_box :external_coach_only %>
       <%= form.label :external_coach_only %>
     </td>
+  </tr>
+  <tr>
+    <th><%= form.label :status %></th>
+    <td><%= form.select :status, CaArticle.status_options %></td>
   </tr>
 </table>

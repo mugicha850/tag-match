@@ -1,0 +1,13 @@
+class Alter2CaArticles < ActiveRecord::Migration[6.1]
+    def change
+      add_column :ca_article, :title, :string, null: false          # タイトル
+      add_column :ca_article, :body_1, :text, null: false             # 本文1
+      add_column :ca_article, :body_2, :text, null: false             # 本文2
+      add_column :ca_article, :body_3, :text, null: false             # 本文3
+      add_column :ca_article, :released_at, :datetime, null: false  # 掲載開始日時
+      add_column :ca_article, :expired_at, :datetime                # 掲載終了日時
+      add_column :ca_article, :club_advisor_only, :boolean, null: false, default: false     # 会員のみフラグ
+      add_column :ca_article, :status, :string, null: false, default: "draft"     # 状態
+    end
+  end
+  

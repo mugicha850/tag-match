@@ -1,4 +1,4 @@
-table_names = %w(external_coaches club_advisors)
+table_names = %w(ca_articles)
 
 table_names.each do |table_name|
   path = Rails.root.join("db", "seeds", Rails.env, "#{table_name}.rb")

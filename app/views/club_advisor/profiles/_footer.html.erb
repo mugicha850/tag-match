@@ -1,0 +1,12 @@
+<ul class="article-footer">
+  <% if current_club_advisor %>
+    <li><%= EcArticle.status_text(article.status) %></li>
+    <% if current_club_advisor == article.author %>
+      <%= link_to "編集", [:edit, article] %>
+      <%= link_to "画像", [article, :images] %>
+      <%= link_to "削除", article, method: :delete,
+            data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+  <% end %>
+
+</ul>

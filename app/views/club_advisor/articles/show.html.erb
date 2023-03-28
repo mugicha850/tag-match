@@ -1,0 +1,42 @@
+<% @page_title = @article.title %>
+<h1><%= @article.title %></h1>
+
+<% if current_club_advisor %>
+  <div class="toolbar">
+    <%= link_to "編集", edit_external_coach_article_path(@article) %>
+  </div>
+<% end %>
+<table class="attr">
+  <tr>
+    <th width="100">タイトル</th>
+    <td><%= @article.title %></td>
+  </tr>
+  <tr>
+    <th>本文</th>
+    <td><%= simple_format(@article.body_1) %></td>
+  </tr>
+  <tr>
+    <th>本文</th>
+    <td><%= simple_format(@article.body_2) %></td>
+  </tr>
+  <tr>
+    <th>本文</th>
+    <td><%= simple_format(@article.body_3) %></td>
+  </tr>
+  <tr>
+    <th>掲載開始日時</th>
+    <td><%= @article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>掲載終了日時</th>
+    <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>会員限定</th>
+    <td><%= @article.external_coach_only? ? "○" : "－" %></td>
+  </tr>
+</table>
+
+
+
+<%= link_to "戻る", :external_coach_articles %>

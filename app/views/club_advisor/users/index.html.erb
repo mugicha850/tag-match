@@ -1,0 +1,63 @@
+<div class="py-12">
+  <div class="flex justify-around">
+    <div class="w-5/6 mx-8 w-1/6 lg:px-4">
+      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 bg-white border-b border-gray-200">
+          内容
+        </div>
+      </div>
+    </div>
+
+    <div class="ml-32 w-5/6 mx-16 w-5/6">
+      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 bg-white border-b border-gray-200">
+          内容
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% @title = "外部コーチトップページ" %>
+<h1><%= @title %></h1>
+
+
+
+<div class="table-wrapper">
+  <% unless current_club_advisor %>
+    <div class="links">
+      <%= link_to "新規登録", :new_club_advisor_user %>
+    </div>
+  <% end %>
+
+  <table class="listing">
+    <tr>
+      <th>氏名</th>
+      <th>フリガナ</th>
+      <th>メールアドレス</th>
+      <th>入社日</th>
+      <th>退職日</th>
+      <th>停止フラグ</th>
+      <th>アクション</th>
+    </tr>
+    <% @club_advisor.each do |m| %>
+      <tr>
+        <td><%= m.family_name %> <%= m.given_name %></td>
+        <td><%= m.family_name_kana %> <%= m.given_name_kana %></td>
+        <td class="email"><%= m.email %></td>
+        <td class="date"><%= m.start_date.strftime("%Y/%m/%d") %></td>
+        <td class="date"><%= m.end_date.try(:strftime, "%Y/%m/%d") %></td>
+        <td class="boolean">
+          <%= m.suspended? ? raw("&#x2611;") : raw("&#x2610;") %></td>
+        <td class="actions">
+        <%= link_to "編集", [ :edit, m, :user] %>
+        <%= link_to "削除", [ m, :user ], method: :delete,
+            data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+  </table>
+  <%= paginate @club_advisor %>
+
+  <div class="links">
+    <%= link_to "新規登録", :new_club_advisor_user %>
+  </div>
+</div>

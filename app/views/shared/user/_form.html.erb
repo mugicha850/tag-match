@@ -1,0 +1,53 @@
+<div class="notes">
+  <span class="mark">*</span> 印の付いた項目は入力必須です。
+</div>
+<div>
+  <%= form.label :email, "メールアドレス", class: "required" %>
+  <%= form.email_field :email, size: 32, required: true %>
+</div>
+<% if form.object.new_record? %>
+  <div>
+    <%= form.label :password, "パスワード", class: "required" %>
+    <%= form.password_field :password, size: 32, required: true %>
+  </div>
+<% end %>
+<div>
+  <%= form.label :family_name, "氏名", class: "required" %>
+  <%= form.text_field :family_name, required: true %>
+  <%= form.text_field :given_name, required: true %>
+</div>
+<div>
+  <%= form.label :family_name_kana, "フリガナ", class: "required" %>
+  <%= form.text_field :family_name_kana, required: true %>
+  <%= form.text_field :given_name_kana, required: true %>
+</div>
+<div>
+  <%= form.label :start_date, "入社日", class: "required" %>
+  <%= form.date_field :start_date, required: true %>
+</div>
+<div>
+  <%= form.label :end_date, "退職日" %>
+  <%= form.date_field :end_date %>
+</div>
+<div class="check-boxes">
+  <%= form.check_box :suspended %>
+  <%= form.label :suspended, "アカウント停止" %>
+</div>
+<div>
+  <%= form.label :sport_id, "スポーツID", class: "required" %>
+  <%= form.text_field :sport_id, required: true %>
+</div>
+<div>
+  <%= form.label :area_id, "エリアID", class: "required" %>
+  <%= form.text_field :area_id, required: true %>
+</div>
+<div>
+  <%= form.label :sex, "性別", class: "required" %>
+  <%= form.text_field :sex, required: true %>
+</div>
+<div>
+  <th><%= form.label :birthday, for: "external_coach_birthday_1i" %></th>
+  <td><%= form.date_select :birthday,
+    start_year: 1940, end_year: Time.current.year,
+    use_month_numbers: true %></td>
+</div>
