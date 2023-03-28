@@ -1,0 +1,34 @@
+<% @page_title = "部活指導者 一覧" %>
+<h1><%= @page_title %></h1>
+
+<% if @articles.present? %>
+    <table class="list">
+        <thead>
+            <tr>
+            <th>タイトル</th>
+            <th>本文</th>
+            <th>日時</th>
+            <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 掲載期間内であれば表示する -->
+            <% articles = EcArticle.visible.order(released_at: :desc) %>
+            <% @articles.each do |article| %>
+            <!-- truncateは引数に指定された文字列がある長さを超えていれば切って、省略記号（...）を加えて返します。-->
+            <tr>
+                <td><%= link_to article.title, club_advisor_article_path(article) %></td>
+                <td><%= truncate article.body_1, length: 80 %>
+                <%= link_to "もっと読む", :club_advisor_articles %></td>
+                <td><%= article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
+            </tr>
+            
+            <% end %>
+            <!-- end -->
+        </tbody>
+    </table>
+<% else %>
+<p>記事がまだありません。</p>
+<% end %>
+<%= paginate @articles %>
+

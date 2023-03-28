@@ -1,7 +1,6 @@
-<% @page_title = "ニュース記事一覧" %>
+<% @page_title = "クラブアドバイザー記事一覧" %>
 <h1><%= @page_title %></h1>
 
-<div class="toolbar"><%= link_to "新規作成", :new_external_coach_article %></div>
 
 <% if @articles.present? %>
   <table class="list">
@@ -27,16 +26,17 @@
         <!-- truncateは引数に指定された文字列がある長さを超えていれば切って、省略記号（...）を加えて返します。-->
         <td><%= truncate article.body_1, length: 80 %>
             <%= link_to "もっと読む", :external_coach_articles %></td>
+        <%= render "footer", article: article %>    
 
       <% end %>
     </tbody>
     <!-- 掲載期間内であれば表示する -->
-    <% articles = EcArticle.visible.order(released_at: :desc) %>
-    <% articles.each do |article| %>
+    <% article = EcArticle.visible.order(released_at: :desc) %>
+    <% article.each do |article| %>
         <li><%= link_to article.title, :external_coach_articles %></li>
     <% end %>
     <!-- end -->
   </table>
 <% else %>
-  <p>ニュースがありません。</p>
+  <p>記事がまだありません。</p>
 <% end %>

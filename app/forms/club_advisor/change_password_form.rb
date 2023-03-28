@@ -1,4 +1,4 @@
-class ExternalCoach::ChangePasswordForm
+class ClubAdvisor::ChangePasswordForm
   include ActiveModel::Model
 
   attr_accessor :object, :current_password, :new_password,
@@ -6,7 +6,7 @@ class ExternalCoach::ChangePasswordForm
   validates :new_password, presence: true, confirmation: true
 
     #   validate do
-    #     unless ExternalCoach::Authenticator.new(object).authenticate(current_password)
+    #     unless ClubAdvisor::Authenticator.new(object).authenticate(current_password)
     #       errors.add(:current_password, :wrong)
     #     end
     #  end

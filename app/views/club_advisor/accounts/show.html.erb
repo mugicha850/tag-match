@@ -3,10 +3,12 @@
     <div class="w-5/6 mx-8 w-1/6 lg:px-4">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
-          <ul class="toolbar">
-            <tr><%= link_to "公開プロフィール", :external_coach_profile %></tr>
-            <tr><%= link_to "アカウント情報の編集", :external_coach_account %></tr>
-          </ul>
+            <table>
+            <tr class="toolbar">
+                <td><%= link_to "公開プロフィール", :club_advisor_profile %></td>
+            </tr>
+                <td><%= link_to "アカウント情報の編集", :club_advisor_account %></td>
+            </table>
         </div>
       </div>
     </div>
@@ -15,11 +17,11 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
             <% @page_title = "マイアカウント" %>
-            <% @current_external_coach %>
+            <% @current_club_advisor %>
 
             <h1><%= @page_title %></h1>
 
-            <div class="toolbar"><%= link_to "編集", :edit_external_coach_account %></div>
+            <div class="toolbar"><%= link_to "編集", :edit_club_advisor_account %></div>
 
 
           
@@ -27,15 +29,15 @@
             <table class="attr">
                 <tr>
                     <th width="150">背番号</th>
-                    <td><%= @external_coach.sport_id %></td>
+                    <td><%= @club_advisor.sport_id %></td>
                 </tr>
                 <tr>
                     <th>ユーザー名</th>
-                    <td><%= @external_coach.family_name %></td>
+                    <td><%= @club_advisor.family_name %></td>
                 </tr>
                 <tr>
                     <th>氏名</th>
-                    <td><%= @external_coach.given_name %></td>
+                    <td><%= @club_advisor.given_name %></td>
                 </tr>
                 <tr>
                     <th>性別</th>
@@ -45,11 +47,11 @@
                 </tr>
                 <tr>
                     <th>メールアドレス</th>
-                    <td><%= @external_coach.email %></td>
+                    <td><%= @club_advisor.email %></td>
                 </tr>
                 <tr>
                     <th>管理者</th>
-                    <td><%= @external_coach.suspended? ? "○" : "－" %></td>
+                    <td><%= @club_advisor.suspended? ? "○" : "－" %></td>
                 </tr>
             </table>
 

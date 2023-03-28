@@ -1,9 +1,0 @@
-<% @page_title = "ニュース記事の編集" %>
-<h1><%= @page_title %></h1>
-
-<p><%= link_to "記事の詳細に戻る", external_coach_article_path(@article) %></p>
-
-<%= form_with model: @article, url: external_coach_article_path(@article) do |form| %>
-  <%= render "form", form: form %>
-  <div><%= form.submit "更新する" %></div>
-<% end %>

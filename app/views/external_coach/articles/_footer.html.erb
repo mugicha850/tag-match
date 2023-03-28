@@ -1,0 +1,12 @@
+<ul class="article-footer">
+  <% if current_external_coach %>
+    <li><%= EcArticle.status_text(article.status) %></li>
+    <% if current_external_coach == article.author %>
+      <%= menu_link_to "編集", [:edit, article] %>
+      <%= menu_link_to "画像", [article, :images] %>
+      <%= menu_link_to "削除", article, method: :delete,
+            data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+  <% end %>
+
+</ul>

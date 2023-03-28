@@ -1,5 +1,5 @@
-class EcArticle < ApplicationRecord
-  belongs_to :author, class_name: "ExternalCoach", foreign_key: "external_coach_id"  
+class CaArticle < ApplicationRecord
+  belongs_to :author, class_name: "ClubAdvisor", foreign_key: "club_advisor_id"  
 
   STATUS_VALUES = %w(draft public)
 
@@ -15,17 +15,15 @@ class EcArticle < ApplicationRecord
   #scope :published, -> { where("status <> ?", "draft") }
   
   # fullスコープでは
-  scope :full, ->(external_coach) {
-    where("external_coach_id = ? OR status <> ?", external_coach.id, "draft") }
-  scope :readable_for, ->(external_coach) { external_coach ? full(external_coach) : common }
+  scope :full, ->(club_advisor) {
+    where("club_advisor_id = ? OR status <> ?", club_advisor.id, "draft") }
+  scope :readable_for, ->(club_advisor) { club_advisor ? full(club_advisor) : common }
 
   class << self
-    # status_textメソッドは、tメソッドを使ってstatusカラムの値を日本語にするものです。
     def status_text(status)
       I18n.t("activerecord.attributes.ec_article.status_#{status}")
     end
 
-    # `status_options`メソッドは、[["下書き","draft"],["会員限定","member_only"],["公開","public"]]のような配列を作ります。
     def status_options
       STATUS_VALUES.map { |status| [status_text(status), status] }
     end

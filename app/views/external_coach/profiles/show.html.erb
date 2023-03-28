@@ -6,7 +6,7 @@
           公開プロフィール
           アカウント
         </div>
-        <div><%= link_to "公開プロフィール", :external_coach_articles %></div>
+        <div><%= link_to "公開プロフィール", :edit_external_coach_profile %></div>
         <div><%= link_to "パスワードの編集", :edit_external_coach_password %></div>
       </div>
     </div>
@@ -14,12 +14,54 @@
     <div class="ml-32 w-5/6 mx-16 w-5/6">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
+          
+          <% if @article.present? %>
             <% @page_title = "会員の詳細" %>
-
             <h1><%= @page_title %></h1>
 
-            
+            <% if current_external_coach %>
+              <div class="toolbar">
+                <%= link_to "編集", edit_external_coach_profile_path(@article) %>
+              </div>
+            <% end %>
 
+            <table class="attr">
+              <tr>
+                <th width="100">タイトル</th>
+                <td><%= @article.title %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_1) %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_2) %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_3) %></td>
+              </tr>
+              <tr>
+                <th>掲載開始日時</th>
+                <td><%= @article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
+              </tr>
+              <tr>
+                <th>掲載終了日時</th>
+                <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
+              </tr>
+              <tr>
+                <th>会員限定</th>
+                <td><%= @article.external_coach_only? ? "○" : "－" %></td>
+              </tr>
+            </table>
+              <%= link_to "削除", external_coach_profile_path(@article), method: :delete,
+                  data: { confirm: "本当に削除しますか？" } %>
+          <% else %>
+            <p>記事がまだありません。</p>
+            <%= link_to "公開プロフィールを作成する。", :new_external_coach_profile %>
+          <% end %>
+            
         </div>
       </div>
     </div>
