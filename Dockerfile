@@ -37,7 +37,7 @@ COPY . $APP_HOME
 COPY .env.production /var/www/html/.env
 # 初回起動時に行うスクリプトファイルをコピーして実行権限を与える
 COPY ./ruby/start.sh /var/www/html/start.sh
-RUN ls -al /var/www/html/start.sh && chmod 744 /var/www/html/start.sh
+RUN chmod 744 /var/www/html/start.sh
 
 # 必ずキャッシュ用のディレクトリを作っておくこと→ Fargateの場合ずっとキャッシュが残ることになる
 # RUN mkdir storage/framework/cache/data
