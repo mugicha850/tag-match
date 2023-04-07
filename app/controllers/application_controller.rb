@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   # 例外エラー処理クラスの定義
   class LoginRequired < StandardError; end
 
-  include ErrorHandlers if Rails.env.production?
+#  include ErrorHandlers if Rails.env.production?
 
   private def set_layout
     if params[:controller].match(%r{\A(external_coach|club_advisor)/})

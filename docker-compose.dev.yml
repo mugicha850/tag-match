@@ -1,0 +1,66 @@
+version: "3.9"
+services:
+  db: #database.ymlのhostと同じにする必要がある
+    image: mysql:8.0.26
+    platform: linux/amd64
+    container_name: rails_mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: #ここが空白
+      DB_PORT: 3306
+      DB_DATABASE: tagmatch
+      DB_USERNAME: dbuser
+      DB_PASSWORD: tagmatchdbuser
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" #これ追加
+      TZ: 'Asia/Tokyo'
+    ports:
+      - '3306:3306'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --innodb_use_native_aio=0
+ 
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: rails_app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb -e production"
+    volumes:
+      - .:/myapp
+      - public-data:/myapp/public
+      - tmp-data:/myapp/tmp
+      - log-data:/myapp/log
+    networks:
+      - tagmatch-networks
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+
+  web:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: NGINX
+    volumes:
+      - public-data:/myapp/public
+      - tmp-data:/myapp/tmp
+    networks:
+      - tagmatch-networks
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    stdin_open: true
+    tty: true
+      
+volumes:
+  mysql-data:
+    driver: local
+  public-data:
+    driver: local
+  tmp-data:
+  log-data:
+
+networks:
+  tagmatch-networks:
+    external: true

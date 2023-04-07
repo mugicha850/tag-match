@@ -1,7 +1,5 @@
 FROM ruby:3.0.2
 
-RUN apt-get update && apt-get install -y apache2
-
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update -qq \
@@ -11,6 +9,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 # タイムゾーン設定
 ENV TZ=Asia/Tokyo
+
+
 
 # cronのインストール
 RUN apt-get update && apt-get install -y \
@@ -36,7 +36,7 @@ RUN a2enmod rewrite
 COPY . $APP_HOME
 COPY .env.production /var/www/html/.env
 # 初回起動時に行うスクリプトファイルをコピーして実行権限を与える
-COPY ./ruby/start.sh /var/www/html/start.sh
+COPY start.sh /var/www/html/start.sh
 RUN chmod 744 /var/www/html/start.sh
 
 # 必ずキャッシュ用のディレクトリを作っておくこと→ Fargateの場合ずっとキャッシュが残ることになる
@@ -62,6 +62,7 @@ RUN bundle install -j4
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
+
 
 COPY . /myapp
 
