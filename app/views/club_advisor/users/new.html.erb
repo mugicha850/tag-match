@@ -5,6 +5,10 @@
   <%= form_with model: @club_advisor, url: :club_advisor_users do |form| %>
     <%= render "shared/errors", obj: @club_advisor %>
     <%= render "shared/user/form", form: form %>
+    <div>
+      <%= form.label :school_id, "学校ID", class: "required" %>
+      <%= form.text_field :school_id, required: true %>
+    </div>
     <div class="buttons">
       <%= form.submit "登録" %>
       <%= link_to "キャンセル", :club_advisor_users %>

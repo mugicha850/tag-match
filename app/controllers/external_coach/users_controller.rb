@@ -35,7 +35,7 @@ class ExternalCoach::UsersController < ExternalCoach::Base
   end
  
   def create
-    @external_coach = ExternalCoach.new(params[:external_coach])
+    @external_coach = ExternalCoach.new(external_coach_params)
     if @external_coach.save
       flash.notice = "職員アカウントを新規登録しました。"
       #redirect_to :external_coach_root
@@ -65,6 +65,27 @@ class ExternalCoach::UsersController < ExternalCoach::Base
 
   private def new_form_params
     params.require(:external_coach).permit(:email, :password)
+  end
+
+  private def external_coach_params
+    params.require(:external_coach).permit(
+        :email,
+        :family_name,
+        :given_name,
+        :family_name_kana,
+        :given_name_kana,
+        :career,
+        :start_date,
+        :end_date,
+        :suspended,
+        :sport_id,
+        :area_id,
+        :club_id,
+        :created_at,
+        :updated_at,
+        :birthday,
+        :sex
+    )
   end
 
 end
