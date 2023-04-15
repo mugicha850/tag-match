@@ -70,6 +70,7 @@ class ExternalCoach::UsersController < ExternalCoach::Base
   private def external_coach_params
     params.require(:external_coach).permit(
         :email,
+        :password,
         :family_name,
         :given_name,
         :family_name_kana,
