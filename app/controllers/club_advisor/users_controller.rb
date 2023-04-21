@@ -35,21 +35,21 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
   end
  
   def create
-    @club_advisor = ClubAdvisor.new(params[:club_advisor])
+    @club_advisor = ClubAdvisor.new(club_advisor_params)
     if @club_advisor.save
       flash.notice = "職員アカウントを新規登録しました。"
-      #redirect_to :club_advisor_root
+      #redirect_to :club_advisor_users
 
       @form = ClubAdvisor::LoginForm.new(new_form_params)
       if @form.email.present?
         club_advisor =
           ClubAdvisor.find_by("LOWER(email) = ?", @form.email.downcase)
       end
-        if ClubAdvisor::Authenticator.new(club_advisor).authenticate(@form.password)
-          session[:club_advisor_id] = club_advisor.id
-          flash.notice = "ログインしました。"
-          redirect_to :club_advisor_root
-        end
+      if ClubAdvisor::Authenticator.new(club_advisor).authenticate(@form.password)
+        session[:club_advisor_id] = club_advisor.id
+        flash.notice = "ログインしました。"
+        redirect_to :club_advisor_users
+      end
 
     else
       render action: "new"
@@ -65,5 +65,28 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
 
   private def new_form_params
     params.require(:club_advisor).permit(:email, :password)
+  end
+
+  private def club_advisor_params
+    params.require(:club_advisor).permit(
+        :email,
+        :password,
+        :family_name,
+        :given_name,
+        :family_name_kana,
+        :given_name_kana,
+        :career,
+        :start_date,
+        :end_date,
+        :suspended,
+        :sport_id,
+        :area_id,
+        :school_id,
+        :club_id,
+        :created_at,
+        :updated_at,
+        :birthday,
+        :sex
+    )
   end
 end

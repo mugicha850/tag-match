@@ -1,7 +1,5 @@
 FROM ruby:3.0.2
 
-RUN apt-get update && apt-get install -y apache2
-
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update -qq \
@@ -12,6 +10,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # タイムゾーン設定
 ENV TZ=Asia/Tokyo
 
+
+
 # cronのインストール
 RUN apt-get update && apt-get install -y \
   busybox-static \
@@ -20,24 +20,19 @@ RUN apt-get update && apt-get install -y \
 
 
 # アプリケーションフォルダを環境変数として設定
-ENV APP_HOME /var/www/html
+ENV APP_HOME /usr/share/nginx
 
-# apacheのuidとgidをdocker user uid/gidに変更。
+# nginxのuidとgidをdocker user uid/gidに変更。
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-#change the web_root to laravel /var/www/html/public folder
-# RUN sed -i -e "s/html/html\/public/g" /etc/apache2/sites-enabled/000-default.conf
-COPY ./ruby/vhost.conf /etc/apache2/conf-enabled/vhost.conf
-
-#  apache module rewrite を有効にする
-RUN a2enmod rewrite
 
 # ソースコードと.envファイルをDockerImageに埋め込む
 COPY . $APP_HOME
-COPY .env.production /var/www/html/.env
+COPY .env /usr/share/nginx/html/.env
+
 # 初回起動時に行うスクリプトファイルをコピーして実行権限を与える
-COPY ./ruby/start.sh /var/www/html/start.sh
-RUN chmod 744 /var/www/html/start.sh
+COPY start.sh /usr/share/nginx/html/start.sh
+RUN chmod 744 /usr/share/nginx/html/start.sh
 
 # 必ずキャッシュ用のディレクトリを作っておくこと→ Fargateの場合ずっとキャッシュが残ることになる
 # RUN mkdir storage/framework/cache/data
@@ -59,11 +54,23 @@ RUN rm -rf vendor/cache
 RUN bundle config set force_ruby_platform true 
 RUN bundle install -j4
 
+
+
+
+
+RUN mkdir -p tmp/sockets
+RUN mkdir -p tmp/pids
+
+
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
+
 COPY . /myapp
+
+VOLUME /myapp/public
+VOLUME /myapp/tmp
 
 
 # CMD ruby artisan migrate --force

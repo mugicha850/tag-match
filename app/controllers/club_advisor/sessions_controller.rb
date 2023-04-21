@@ -9,7 +9,7 @@ class ClubAdvisor::SessionsController < ClubAdvisor::Base
   end
 
   def create
-    @form = ClubAdvisor::LoginForm.new(params[:club_advisor_login_form])
+    @form = ClubAdvisor::LoginForm.new(login_form_params)
     if @form.email.present?
       club_advisor =
         ClubAdvisor.find_by("LOWER(email) = ?", @form.email.downcase)
@@ -21,12 +21,16 @@ class ClubAdvisor::SessionsController < ClubAdvisor::Base
       else
         session[:club_advisor_id] = club_advisor.id
         flash.notice = "ログインしました。"
-        redirect_to :club_advisor_root
+        redirect_to :club_advisor_users
       end
     else
       flash.now.alert = "メールアドレスまたはパスワードが正しくありません。"
       render action: "new"
     end
+  end
+
+  private def login_form_params
+    params.require(:club_advisor_login_form).permit(:email, :password)
   end
 
   def destroy

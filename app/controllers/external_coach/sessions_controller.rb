@@ -21,7 +21,7 @@ class ExternalCoach::SessionsController < ExternalCoach::Base
       else
         session[:external_coach_id] = external_coach.id
         flash.notice = "ログインしました。"
-        redirect_to :external_coach_root
+        redirect_to :external_coach_users
       end
     else
       flash.now.alert = "メールアドレスまたはパスワードが正しくありません。"
