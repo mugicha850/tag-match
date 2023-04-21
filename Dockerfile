@@ -54,9 +54,9 @@ RUN rm -rf vendor/cache
 RUN bundle config set force_ruby_platform true 
 RUN bundle install -j4
 
-COPY ./bin/webpack /bin/webpack
-RUN chmod +x /bin/webpack
-RUN NODE_ENV=production /bin/webpack
+
+
+
 
 RUN mkdir -p tmp/sockets
 RUN mkdir -p tmp/pids
@@ -71,6 +71,7 @@ COPY . /myapp
 
 VOLUME /myapp/public
 VOLUME /myapp/tmp
+
 
 # CMD ruby artisan migrate --force
 CMD ["bash", "start.sh"]

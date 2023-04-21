@@ -20,10 +20,7 @@ gem "date_validator"
 gem "valid_email2"
 gem "nokogiri"
 
-# productionで以下を追加しました。
-gem 'webpacker', '~> 5.0'
-gem 'haml-rails'
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 
 # dotenv追加
 gem 'dotenv-rails'
