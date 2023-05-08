@@ -32,10 +32,7 @@
     <th>掲載終了日時</th>
     <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
   </tr>
-  <tr>
-    <th>会員限定</th>
-    <td><%= @article.external_coach_only? ? "○" : "－" %></td>
-  </tr>
+
 </table>
 
 <%= link_to "戻る", :external_coach_articles %>

@@ -77,6 +77,8 @@
     <div class="navbar-center">
       <%= link_to "TAG Match", :external_coach_articles, class: "btn btn-ghost normal-case text-xl" %> 
     </div>
+    <%= content_tag(:span, flash.notice, class: "notice") if flash.notice %>
+    <%= content_tag(:span, flash.alert, class: "alert") if flash.alert %>
   </div>
   <div class="flex navbar-end container px-4 mx-auto md:flex md:items-center w-1/3">
     <%=

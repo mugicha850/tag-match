@@ -2,11 +2,11 @@ class ExternalCoach < ApplicationRecord
   has_one :ec_article, dependent: :destroy 
 
   def password=(raw_password)
-      if raw_password.kind_of?(String)
-        self.hashed_password = BCrypt::Password.create(raw_password)
-      elsif raw_password.nil?
-        self.hashed_password = nil
-      end
+    if raw_password.kind_of?(String)
+      self.hashed_password = BCrypt::Password.create(raw_password)
+    elsif raw_password.nil?
+      self.hashed_password = nil
+    end
   end
 
   # current_passwordの書き込み・読み取りを可能にする
@@ -35,4 +35,14 @@ class ExternalCoach < ApplicationRecord
 
   # パスワード変更時のバリデーション, このバリデーションは、「password」という属性（カラム）に対して、存在性（presence）のバリデーションを行うことを意味しています。「if: :current_password」というオプションは、「current_password」というメソッドが「true」を返す場合のみバリデーションが実行されます。
   validates :password, presence: {if: :current_password}
+
+  validate :above_18_years_old
+
+  def above_18_years_old
+    if birthday.present? && birthday >= 18.years.ago.to_date
+      errors.add(:birthday, "must be above 18 years old")
+    end
+  end
+
+  validates :sex, presence: true
 end
