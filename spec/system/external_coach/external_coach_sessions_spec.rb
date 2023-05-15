@@ -46,7 +46,7 @@ RSpec.describe "ExternalCoach::Sessions", type: :system do
           fill_in 'external_coach_login_form_password', with: ''
           click_button 'ログインする'
   
-          # ログインが成功したことを確認
+          # ログインが失敗したことを確認
           expect(page).to have_content 'メールアドレスまたはパスワードが正しくありません。'
         end
       end
