@@ -79,7 +79,7 @@ aws ecs update-service --region ap-northeast-1 --cluster tag-match-ecs --service
 
 aws ecs execute-command --region ap-northeast-1 --cluster クラスター名 --task タスクID --container コンテナ名 --interactive --command "/bin/sh"
 
-aws ecs execute-command --region ap-northeast-1 --cluster tag-match-ecs --task 638a1550c7a74f8b8f07afd8e3c3e177 --container rails_app --interactive --command "/bin/sh"
+aws ecs execute-command --region ap-northeast-1 --cluster tag-match-ecs --task e148789c783c4bf29e7e6faf688f1dd8 --container rails_app --interactive --command "/bin/sh"
 
 ## MariaDBコンテナのヘルスチェック
 CMD-SHELL, mysqladmin ping -u dbuser -psimplememodbuser -h 127.0.0.1 || exit 1

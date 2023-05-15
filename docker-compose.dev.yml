@@ -8,13 +8,11 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
       DB_PORT: 3306
-      DB_DATABASE: tagmatch
-      DB_USERNAME: root
-      DB_PASSWORD: 
+      DB_DATABASE: myapp_development
+      DB_USERNAME: dbuser
+      DB_PASSWORD: password
       DB_HOST: db
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       TZ: 'Asia/Tokyo'
     ports:
       - '3306:3306'
@@ -24,12 +22,20 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb -e production"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb -e development"
     volumes:
       - .:/myapp
       - public-data:/myapp/public
       - tmp-data:/myapp/tmp
       - log-data:/myapp/log
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      DB_PORT: 3306
+      DB_DATABASE: myapp_development
+      DB_USERNAME: dbuser
+      DB_PASSWORD: password
+      DB_HOST: db
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     depends_on:
       - db
     stdin_open: true

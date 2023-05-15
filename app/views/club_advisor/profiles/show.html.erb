@@ -14,55 +14,51 @@
     <div class="ml-32 w-5/6 mx-16 w-5/6">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
+          <% if @article.present? %>
+            <% @page_title = "会員の詳細" %>
+            <h1><%= @page_title %></h1>
 
-            <% if @article.present? %>
-                <% @page_title = "会員の詳細" %>
-                <h1><%= @page_title %></h1>
-
-                <% if current_club_advisor %>
-                    <div class="toolbar">
-                        <%= link_to "編集", edit_club_advisor_profile_path(@article) %>
-                    </div>
-                <% end %>
-
-                <table class="attr">
-                    <tr>
-                        <th width="100">タイトル</th>
-                        <td><%= @article.title %></td>
-                    </tr>
-                    <tr>
-                        <th>本文</th>
-                        <td><%= simple_format(@article.body_1) %></td>
-                    </tr>
-                    <tr>
-                        <th>本文</th>
-                        <td><%= simple_format(@article.body_2) %></td>
-                    </tr>
-                    <tr>
-                        <th>本文</th>
-                        <td><%= simple_format(@article.body_3) %></td>
-                    </tr>
-                    <tr>
-                        <th>掲載開始日時</th>
-                        <td><%= @article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
-                    </tr>
-                    <tr>
-                        <th>掲載終了日時</th>
-                        <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
-                    </tr>
-                    <tr>
-                        <th>会員限定</th>
-                        <td><%= @article.club_advisor_only? ? "○" : "－" %></td>
-                    </tr>
-                </table>
-            <% else %>
-                <p>記事がまだありません。</p>
-                <%= link_to "記事を作成する", :new_club_advisor_profile %>
+            <% if current_club_advisor %>
+              <div class="toolbar">
+                <%= link_to "編集", edit_club_advisor_profile_path(@article) %>
+              </div>
             <% end %>
-            
 
-            <%= link_to "戻る", :club_advisor_articles %>
-    
+            <table class="attr">
+              <tr>
+                <th width="100">タイトル</th>
+                <td><%= @article.title %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_1) %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_2) %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@article.body_3) %></td>
+              </tr>
+              <tr>
+                <th>掲載開始日時</th>
+                <td><%= @article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
+              </tr>
+              <tr>
+                <th>掲載終了日時</th>
+                <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
+              </tr>
+              <tr>
+                <th>会員限定</th>
+                <td><%= @article.club_advisor_only? ? "○" : "－" %></td>
+              </tr>
+            </table>
+          <% else %>
+            <p>記事がまだありません。</p>
+            <%= link_to "記事を作成する", :new_club_advisor_profile %>
+          <% end %>
+          <%= link_to "戻る", :club_advisor_articles %>    
         </div>
       </div>
     </div>
