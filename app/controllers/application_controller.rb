@@ -28,6 +28,8 @@ class ApplicationController < ActionController::Base
 
   # IPアドレス制限によるアクセス拒否などのエラー(ステータスコード403)の発生時に特定の処理を行う
   rescue_from IpAddressRejected, with: :rescue403
+
+  rescue_from LoginRequired, with: :rescue_login_required
   
   # ステータスコード500のエラーページを表示するための処理を行う
   private def rescue500(e)
@@ -41,5 +43,7 @@ class ApplicationController < ActionController::Base
     render "errors/forbidden", status: 403
   end
 
-
+  private def rescue_login_required(e)
+    render "errors/login_required", status: 403
+  end
 end
