@@ -9,6 +9,22 @@ rm -f /myapp/tmp/pids/server.pid
 
 # Then exec the container's main process (what's set as CMD in the Dockerfile).
 
-bundle exec rails assets:precompile RAILS_ENV=development
+case "$RAILS_ENV" in
+  "production")
+    # `RAILS_ENV`が`production`の場合の処理
+    bundle exec rails assets:precompile RAILS_ENV=production
+    echo "Running production code"
+    ;;
+  "development")
+    # `RAILS_ENV`が`development`の場合の処理
+    bundle exec rails assets:precompile RAILS_ENV=development
+    echo "Running development code"
+    ;;
+  *)
+    # それ以外の場合の処理
+    echo "Unknown environmentです。"
+    ;;
+esac
+
 
 exec "$@"
