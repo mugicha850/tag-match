@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2023_03_27_015215) do
     t.text "body_3", null: false
     t.datetime "released_at", null: false
     t.datetime "expired_at"
-    t.boolean "external_coach_only", default: false, null: false #削除予定
+    t.boolean "external_coach_only", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "external_coach_id", null: false
