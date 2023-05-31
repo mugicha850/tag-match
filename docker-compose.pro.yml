@@ -1,12 +1,10 @@
 version: "3.9"
 services:
   db:
-    build: 
-      context: ./mysqldb-dockerfile
-      dockerfile: Dockerfile    
-    platform: linux/amd64
+    image: mysql:8.0.26  
+    platform: linux/x86_64
     volumes:
-      - dev-data:/var/lib/mysql
+      - dev-prod-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       DB_DATABASE: tagmatch
@@ -21,18 +19,18 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb -e production"
     volumes:
       - .:/myapp
     environment:
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: password
       DB_PORT: 3306
       DB_DATABASE: tagmatch
       DB_USERNAME: root
       DB_PASSWORD: password
       DB_HOST: db
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      RAILS_ENV: development
+      RAILS_ENV: production
     ports:
       - "3000:3000"
     depends_on:
@@ -40,5 +38,5 @@ services:
     stdin_open: true
     tty: true
 volumes:
-  dev-data:
+  dev-prod-data:
     driver: local

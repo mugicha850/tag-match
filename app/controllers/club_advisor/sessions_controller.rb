@@ -1,5 +1,5 @@
 class ClubAdvisor::SessionsController < ClubAdvisor::Base
-    def new
+  def new
     if current_club_advisor
       redirect_to :club_advisor_root
     else
