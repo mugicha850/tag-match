@@ -23,31 +23,36 @@
 
             <div class="toolbar"><%= link_to "編集", :edit_club_advisor_account %></div>
 
-
-          
-
             <table class="attr">
                 <tr>
-                    <th width="150">背番号</th>
-                    <td><%= @club_advisor.sport_id %></td>
-                </tr>
-                <tr>
-                    <th>ユーザー名</th>
-                    <td><%= @club_advisor.family_name %></td>
-                </tr>
-                <tr>
                     <th>氏名</th>
+                    <td><%= @club_advisor.family_name %></td>
                     <td><%= @club_advisor.given_name %></td>
                 </tr>
                 <tr>
+                    <th>フリガナ</th>
+                    <td><%= @club_advisor.family_name_kana %></td>
+                    <td><%= @club_advisor.given_name_kana %></td>
+                </tr>
+                <tr>
                     <th>性別</th>
+                    <td><%= @club_advisor.sex == 1 ? '男' : '女' %></td>
                 </tr>
                 <tr>
                     <th>誕生日</th>
+                    <td><%= @club_advisor.birthday.strftime("%Y年%m月%d日") %></td>
                 </tr>
                 <tr>
                     <th>メールアドレス</th>
                     <td><%= @club_advisor.email %></td>
+                </tr>
+                <tr>
+                    <th>場所</th>
+                    <td><%= @club_advisor.area_id %></td>
+                </tr>
+                <tr>
+                    <th>スポーツ名</th>
+                    <td><%= @club_advisor.sport_id %></td>
                 </tr>
                 <tr>
                     <th>管理者</th>
