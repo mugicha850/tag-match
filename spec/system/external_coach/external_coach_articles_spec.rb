@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "ExternalCoach::Articles", type: :system do
-  let!(:ca_article) { create(:ca_article, title: 'タイトル', body_2: 'テスト2', body_1: 'テスト3', body_1: 'テスト3', released_at: Date.today, status: 'public') }
+  let!(:ca_article) { create(:ca_article, title: 'タイトル', body_1: 'テスト1', body_2: 'テスト2', body_3: 'テスト3', released_at: Date.today, status: 'public') }
   
   describe 'List Screen' do
     before do

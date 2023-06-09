@@ -31,7 +31,7 @@ class EcArticle < ApplicationRecord
     end
   end
 
-
+  # 掲載終了期間が空かどうか
   def no_expiration
     expired_at.nil?
   end

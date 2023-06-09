@@ -40,5 +40,4 @@ class ExternalCoach::AccountsController < ExternalCoach::Base
         :sex
     )
   end
-
 end

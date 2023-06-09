@@ -2,7 +2,7 @@ ja:
   activerecord:
     errors:
       models:
-        external_coach:
+        club_advisor:
           attributes:
             email:
               taken: が他の外部コーチと重複しています。

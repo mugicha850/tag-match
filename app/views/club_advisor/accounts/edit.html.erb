@@ -9,16 +9,14 @@
 <%= form_with model: @club_advisor, url: club_advisor_account_path(@club_advisor) do |form| %>
     <table class="attr">
         <tr>
-            <th><%= form.label :sport_id %></th>
-            <td><%= form.text_field :sport_id, size: 8 %></td>
-        </tr>
-        <tr>
             <th><%= form.label :family_name %></th>
             <td><%= form.text_field :family_name %></td>
+            <td><%= form.text_field :given_name %></td>
         </tr>
         <tr>
-            <th><%= form.label :given_name %></th>
-            <td><%= form.text_field :given_name %></td>
+            <th><%= form.label :family_name_kana %></th>
+            <td><%= form.text_field :family_name_kana %></td>
+            <td><%= form.text_field :given_name_kana %></td>
         </tr>
         <tr>
             <th><%= ClubAdvisor.human_attribute_name(:sex) %></th>
@@ -38,6 +36,10 @@
         <tr>
             <th><%= form.label :email %></th>
             <td><%= form.text_field :email %></td>
+        </tr>
+        <tr>
+            <th><%= form.label :sport_id %></th>
+            <td><%= form.text_field :sport_id, size: 8 %></td>
         </tr>
         <% if @club_advisor.new_record? %>
             <tr>
