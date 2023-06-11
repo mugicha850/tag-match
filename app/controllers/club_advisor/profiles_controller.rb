@@ -1,6 +1,6 @@
 class ClubAdvisor::ProfilesController < ClubAdvisor::Base
   # ログイン前にアクセスするとエラーページに遷移
-  before_action :login_required, :redirect_if_data_present, only: [:new]
+  before_action :login_required
   
   def show
     @club_advisor = current_club_advisor
@@ -15,7 +15,11 @@ class ClubAdvisor::ProfilesController < ClubAdvisor::Base
 
   # クラブアドバイザー:新規登録フォーム
   def new
-    @article = CaArticle.new
+    if CaArticle.exists?(club_advisor_id: current_club_advisor)
+      redirect_to :club_advisor_articles
+    else
+      @article = CaArticle.new
+    end
   end
 
 
@@ -62,11 +66,5 @@ class ClubAdvisor::ProfilesController < ClubAdvisor::Base
         :club_advisor_id,
         :status
     )
-  end
-
-  private def redirect_if_data_present
-    if CaArticle.exists?
-        redirect_to :club_advisor_articles
-    end
   end
 end
