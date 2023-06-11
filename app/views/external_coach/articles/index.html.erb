@@ -1,7 +1,6 @@
 <% @page_title = "クラブアドバイザー記事一覧" %>
 <h1><%= @page_title %></h1>
 
-
 <% if @articles.present? %>
   <table class="list">
     <thead>
@@ -12,42 +11,23 @@
       </tr>
     </thead>
     <tbody>
-      <% @articles.each do |article| %>
-        <tr>
-          <td><%= link_to article.title, external_coach_article_path(article) %></td>
-          <td><%= article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td>
-            <%= link_to "編集", edit_external_coach_article_path(article) %> |
-            <%= link_to "確認", external_coach_article_path(article) %> |
-            <%= link_to "削除", external_coach_article_path(article), method: :delete,
-              data: { confirm: "本当に削除しますか?" } %>
-          </td>
-        </tr>
-        <!-- truncateは引数に指定された文字列がある長さを超えていれば切って、省略記号（...）を加えて返します。-->
-        <td><%= truncate article.body_1, length: 80 %>
-          <%= link_to "もっと読む", external_coach_articles_path(@external_coach) %>
+      <!-- 掲載期間内であれば表示する -->
+      <% article = CaArticle.visible.order(released_at: :desc) %>
+      <% article.each do |article| %>
+      <!-- truncateは引数に指定された文字列がある長さを超えていれば切って、省略記号（...）を加えて返します。-->
+      <tr>
+        <td><%= link_to article.title, external_coach_article_path(article) %></td>
+        <td>
+          <%= truncate article.body_1, length: 80 %>
+          <%= link_to "もっと読む", external_coach_article_path(article) %>
         </td>
-        <%= render "footer", article: article %>    
-
+        <td><%= article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
+      </tr>
       <% end %>
+      <!-- end -->
     </tbody>
-    <!-- 掲載期間内であれば表示する -->
-    <% article = EcArticle.visible.order(released_at: :desc) %>
-    <% article.each do |article| %>
-        <li><%= link_to article.title, :external_coach_articles %></li>
-        <tr>
-          <td><%= link_to article.title, external_coach_article_path(article) %></td>
-          <td><%= article.released_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td>
-            <%= link_to "編集", edit_external_coach_article_path(article) %> |
-            <%= link_to "確認", external_coach_article_path(article) %> |
-            <%= link_to "削除", external_coach_article_path(article), method: :delete,
-              data: { confirm: "本当に削除しますか?" } %>
-          </td>
-        </tr>
-    <% end %>
-    <!-- end -->
   </table>
 <% else %>
   <p>記事がまだありません。</p>
 <% end %>
+<%= paginate @articles %>

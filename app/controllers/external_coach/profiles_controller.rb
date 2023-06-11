@@ -1,7 +1,7 @@
 class ExternalCoach::ProfilesController < ExternalCoach::Base
   
   # ログイン前にアクセスするとエラーページに遷移
-  before_action :login_required, :redirect_if_data_present, only: [:new]
+  before_action :login_required
 
   def show
     @external_coach = current_external_coach
@@ -16,7 +16,11 @@ class ExternalCoach::ProfilesController < ExternalCoach::Base
 
   # 外部コーチ:新規登録フォーム
   def new
-    @article = EcArticle.new
+    if EcArticle.exists?(external_coach_id: current_external_coach)
+      redirect_to :external_coach_articles
+    else
+      @article = EcArticle.new
+    end
   end
 
   # 外部コーチ:新規作成
@@ -63,11 +67,5 @@ class ExternalCoach::ProfilesController < ExternalCoach::Base
         :external_coach_id,
         :status
     )
-  end
-
-  private def redirect_if_data_present
-    if EcArticle.exists?
-        redirect_to :external_coach_articles
-    end
   end
 end
