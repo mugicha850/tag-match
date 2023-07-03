@@ -1,0 +1,24 @@
+FROM ruby:3.0.2
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update -qq \
+    && apt-get install -y nodejs yarn
+
+RUN mkdir /myapp
+WORKDIR /myapp
+
+COPY ./myapp/.env /myapp/.env
+RUN export $(grep -v '^#' .env | xargs)
+
+COPY ./myapp/Gemfile /myapp/Gemfile
+COPY ./myapp/Gemfile.lock /myapp/Gemfile.lock
+RUN rm -rf vendor/cache
+RUN bundle config set force_ruby_platform true 
+RUN bundle install -j4
+
+COPY ./myapp/entrypoint.dev.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.dev.sh
+ENTRYPOINT ["entrypoint.dev.sh"]
+
+COPY . /myapp
+RUN mkdir -p ./myapp/tmp/sockets

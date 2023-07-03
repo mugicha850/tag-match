@@ -1,0 +1,59 @@
+version: '3.9'
+services:
+  db:
+    build: 
+      context: ./mysqldb-dockerfile
+      dockerfile: Dockerfile    
+    platform: linux/amd64
+    volumes:
+      - dev-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      DB_DATABASE: tagmatch
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_HOST: db
+      TZ: 'Asia/Tokyo'
+    ports:
+      - '3306:3306'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --innodb_use_native_aio=0
+  backend:
+    build: 
+      context: ..
+      dockerfile: ./myapp/backend/Dockerfile
+    command: bash -c 'rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0''
+    volumes:
+      - .:/myapp
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      DB_PORT: 3306
+      DB_DATABASE: tagmatch
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_HOST: db
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      RAILS_ENV: development
+    ports:
+      - '8000:3000'
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+  frontend:
+    # frontendにあるDockerfileをもとにイメージを生成する
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    # frontendディレクトリにあるホストのファイルとコンテナを同期
+    volumes:
+      - ./frontend:/myapp
+
+    # ホストの3000番ポートをコンテナの3000番ポートに繋ぐ
+    ports:
+      - '3002:3000'
+    # backendコンテナ起動後にfrontendコンテナを起動
+    depends_on:
+      - backend  
+volumes:
+  dev-data:
+    driver: local
