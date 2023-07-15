@@ -5,6 +5,7 @@ class ClubAdvisor::ArticlesController < ClubAdvisor::Base
     @articles = EcArticle.common
     .visible.order(released_at: :desc)
     .page(params[:page]).per(5)
+    render json: @articles
   end
 
   # 外部コーチ:記事詳細

@@ -11,23 +11,15 @@ ENV HOME=/${WORKDIR}
 RUN mkdir -p /myapp
 
 # コマンド実行する作業ディレクトリの設定する
-WORKDIR /myapp
+WORKDIR /myapp/
 
-COPY ./start.sh ./start.sh
-
-
-RUN chmod +x ./*
-
-# Viteで開発サーバーを起動する
-COPY ./package.json /myapp
-
+COPY tagmatch/package.json /myapp
 
 RUN apk update
 RUN npm install -g @vue/cli
 RUN npm install 
-# RUN npm install vue-template-compiler
+
+COPY tagmatch/ .
 
 
 CMD ["npm", "run", "serve"]
-
-# ENTRYPOINT [ "/frontend/start.sh" ]

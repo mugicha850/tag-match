@@ -19,7 +19,7 @@ gem 'kaminari'
 gem 'date_validator'
 gem 'valid_email2'
 gem 'nokogiri'
-
+gem 'rack-cors'
 
 
 # dotenv追加

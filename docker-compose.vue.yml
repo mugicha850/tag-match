@@ -46,11 +46,12 @@ services:
       dockerfile: Dockerfile.frontend
     # frontendディレクトリにあるホストのファイルとコンテナを同期
     volumes:
-      - ./frontend:/myapp
+      - ./frontend/tagmatch:/myapp/
 
     # ホストの3000番ポートをコンテナの3000番ポートに繋ぐ
     ports:
-      - '3002:3000'
+      - '8080:8080'
+    command: npm run serve
     # backendコンテナ起動後にfrontendコンテナを起動
     depends_on:
       - backend  

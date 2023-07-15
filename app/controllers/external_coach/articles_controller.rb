@@ -5,6 +5,7 @@ class ExternalCoach::ArticlesController < ExternalCoach::Base
       @articles = CaArticle.common
       .visible.order(released_at: :desc)
       .page(params[:page]).per(5)
+      render json: @articles
   end
 
   # クラブアドバイザー:記事詳細
