@@ -1,6 +1,14 @@
 class ClubAdvisor < ApplicationRecord
   has_one :ca_article, dependent: :destroy 
 
+  # クラブアドバイザーがフォローしている外部コーチの関連付け
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :following
+
+  # クラブアドバイザーをフォローしている外部コーチの関連付け
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "following_id", dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :following
+
   def password=(raw_password)
     if raw_password.kind_of?(String)
       self.hashed_password = BCrypt::Password.create(raw_password)
@@ -45,4 +53,8 @@ class ClubAdvisor < ApplicationRecord
   end
 
   validates :sex, presence: true
+
+  def is_followed_by?(external_coach)
+    active_relationships.find_by(following_id: external_coach.id).present?
+  end
 end

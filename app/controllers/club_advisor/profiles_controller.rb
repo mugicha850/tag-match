@@ -67,4 +67,10 @@ class ClubAdvisor::ProfilesController < ClubAdvisor::Base
         :status
     )
   end
+
+  private def redirect_if_data_present
+    if current_club_advisor.ca_article.present?
+        redirect_to :club_advisor_articles
+    end
+  end
 end

@@ -20,6 +20,11 @@ Rails.application.routes.draw do
 
     # passwordルーティング
     resource :password, only: [:show, :edit, :update]
+
+    # フォロールーティング
+    resource :relationships, only: [:create, :destroy]
+    get "followings" => "relationships#followings"
+    get "followers" => "relationships#followers"
   end
 
   namespace :club_advisor do
@@ -44,5 +49,10 @@ Rails.application.routes.draw do
 
     # passwordルーティング
     resource :password, only: [:show, :edit, :update]
+
+    # フォロールーティング
+    resource :relationships, only: [:create, :destroy]
+    get "followings" => "relationships#followings"
+    get "followers" => "relationships#followers"
   end
 end

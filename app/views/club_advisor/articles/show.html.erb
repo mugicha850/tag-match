@@ -1,11 +1,5 @@
 <% @page_title = @article.title %>
-<h1><%= @article.title %></h1>
 
-<% if current_club_advisor %>
-  <div class="toolbar">
-    <%= link_to "編集", edit_external_coach_article_path(@article) %>
-  </div>
-<% end %>
 <table class="attr">
   <tr>
     <th width="100">タイトル</th>
@@ -37,6 +31,11 @@
   </tr>
 </table>
 
+  <%=link_to club_advisor_relationships_path(external_coach_id: @external_coach.id), method: :delete do %>
+    <button type="button" class="btn btn btn-danger">フォロー解除</button>
+  <% end %>
+  <%=link_to club_advisor_relationships_path(external_coach: @external_coach.id), method: :post do %>
+    <button type="button" class="btn btn btn-primary">フォロー</button>
+  <% end %>
 
-
-<%= link_to "戻る", :external_coach_articles %>
+<%= link_to "戻る", :club_advisor_articles %>

@@ -32,7 +32,15 @@
     <th>掲載終了日時</th>
     <td><%= @article.expired_at.try(:strftime, "%Y/%m/%d %H:%M") %></td>
   </tr>
-
 </table>
 
+<% if @club_advisor.is_followed_by?(current_external_coach) %>
+  <%=link_to external_coach_relationships_path(club_advisor_id: @club_advisor.id), method: :delete do %>
+    <button type="button" class="btn btn btn-danger">フォロー解除</button>
+  <% end %>
+<% else %>
+  <%=link_to external_coach_relationships_path(club_advisor_id: @club_advisor.id), method: :post do %>
+    <button type="button" class="btn btn btn-primary">フォロー</button>
+  <% end %>
+<% end %>
 <%= link_to "戻る", :external_coach_articles %>

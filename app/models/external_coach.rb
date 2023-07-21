@@ -1,6 +1,14 @@
 class ExternalCoach < ApplicationRecord
   has_one :ec_article, dependent: :destroy 
 
+  # 外部コーチがフォローしているクラブアドバイザーの関連付け
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "following_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :follower
+
+  # 外部コーチをフォローしているクラブアドバイザーの関連付け
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :following
+
   def password=(raw_password)
     if raw_password.kind_of?(String)
       self.hashed_password = BCrypt::Password.create(raw_password)
@@ -45,4 +53,8 @@ class ExternalCoach < ApplicationRecord
   end
 
   validates :sex, presence: true
+
+  def is_followed_by?(club_advisor)
+    active_relationships.find_by(follower_id: club_advisor.id).present?
+  end
 end

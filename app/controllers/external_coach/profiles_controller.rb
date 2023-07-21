@@ -68,4 +68,10 @@ class ExternalCoach::ProfilesController < ExternalCoach::Base
         :status
     )
   end
+  
+  private def redirect_if_data_present
+    if current_external_coach.ec_article.present?
+        redirect_to :external_coach_articles
+    end
+  end
 end
