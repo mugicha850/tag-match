@@ -34,7 +34,7 @@
   <%=link_to club_advisor_relationships_path(external_coach_id: @external_coach.id), method: :delete do %>
     <button type="button" class="btn btn btn-danger">フォロー解除</button>
   <% end %>
-  <%=link_to club_advisor_relationships_path(external_coach: @external_coach.id), method: :post do %>
+  <%=link_to club_advisor_relationships_path(external_coach_id: @external_coach.id), method: :post do %>
     <button type="button" class="btn btn btn-primary">フォロー</button>
   <% end %>
 
