@@ -19,6 +19,10 @@ module Myapp
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    #API設定
     config.api_only = true
+
+    # undefined method `flash` for が発生するため下記設定
+    config.middleware.use ActionDispatch::Flash
   end
 end

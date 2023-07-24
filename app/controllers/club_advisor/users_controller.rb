@@ -61,7 +61,7 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
   end
 
   private def club_advisor_params
-    params.require(:club_advisor).permit(
+    params.permit(
         :email,
         :password,
         :family_name,
