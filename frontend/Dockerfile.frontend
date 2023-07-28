@@ -1,0 +1,25 @@
+
+# nodeのstable版を公式ページから確認し、DockerHubからalpineベースのものを指定
+FROM node:16.13.2-alpine
+
+# docker-compose.ymlからWORKDIRの値を受け取る
+ARG WORKDIR
+
+# コンテナのホームディレクトリを設定する
+ENV HOME=/${WORKDIR}
+
+RUN mkdir -p /myapp
+
+# コマンド実行する作業ディレクトリの設定する
+WORKDIR /myapp/
+
+COPY tagmatch/package.json /myapp
+
+RUN apk update
+RUN npm install -g @vue/cli
+RUN npm install 
+
+COPY tagmatch/ .
+
+
+CMD ["npm", "run", "serve"]

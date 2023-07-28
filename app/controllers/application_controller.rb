@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   layout :set_layout
+  skip_before_action :verify_authenticity_token
 
   # アクセス権限がない時などのエラー処理クラスの定義
   class Forbidden < ActionController::ActionControllerError; end

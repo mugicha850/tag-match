@@ -3,6 +3,7 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
     @club_advisor = ClubAdvisor.order(:family_name_kana, :given_name_kana)
     # ページネーション
     .page(params[:page]).per(15)
+    render json: @club_advisor
   end
 
   def show
@@ -38,20 +39,13 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
     @club_advisor = ClubAdvisor.new(club_advisor_params)
     if @club_advisor.save
       flash.notice = "職員アカウントを新規登録しました。"
+      render json: @club_advisor, status: :created
       #redirect_to :club_advisor_users
 
-      @form = ClubAdvisor::LoginForm.new(new_form_params)
-      if @form.email.present?
-        club_advisor =
-          ClubAdvisor.find_by("LOWER(email) = ?", @form.email.downcase)
-      end
-      if ClubAdvisor::Authenticator.new(club_advisor).authenticate(@form.password)
-        session[:club_advisor_id] = club_advisor.id
-        flash.notice = "ログインしました。"
-        redirect_to :club_advisor_users
-      end
+
 
     else
+      Rails.logger.debug @club_advisor.errors.full_messages # 追加
       render action: "new"
     end
   end
