@@ -56,6 +56,12 @@
             <label>birthday</label>
             <input v-model="club_advisor.birthday" type="date">
         </div>
+
+        <div>
+            <label>suspended</label>
+            <td>{{ club_advisor.suspended }}</td>
+            <input type="checkbox" id="suspended" v-model="club_advisor.suspended" />
+        </div>
         <div>
             <label>性別</label>
             <select v-model="club_advisor.sex">
@@ -73,7 +79,7 @@
         data: function () {
             return {
                 club_advisor: {
-                    email: '',
+                    email: '@example.com',
                     password: '',
                     family_name: '',
                     given_name: '',
@@ -82,7 +88,7 @@
                     career: '',
                     start_date: '',
                     end_date: '',
-                    suspended: '',
+                    suspended: false,
                     sport_id: '',
                     area_id: '',
                     school_id: '',
@@ -97,7 +103,7 @@
         methods: {
             createClubAdvisor: function () {
                 axios
-                    .post('http://localhost:8000/club_advisor/users', this.clubadvisor)
+                    .post('http://localhost:8000/club_advisor/users', { club_advisor: this.club_advisor })
                     .then(response => (this.club_advisors = response.data))
 
             }

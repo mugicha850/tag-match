@@ -45,6 +45,7 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
 
 
     else
+      Rails.logger.debug @club_advisor.errors.full_messages # 追加
       render action: "new"
     end
   end
@@ -61,7 +62,7 @@ class ClubAdvisor::UsersController < ClubAdvisor::Base
   end
 
   private def club_advisor_params
-    params.permit(
+    params.require(:club_advisor).permit(
         :email,
         :password,
         :family_name,
