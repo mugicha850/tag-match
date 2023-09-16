@@ -20,14 +20,20 @@
         class="link"
       >UserNewPage</router-link>
     </nav>
-    <router-view></router-view>
+    <Wireframe/>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Tab from './views/TabPage.vue';
+import Wireframe from './components/Wireframe.vue';
 
 export default {
+  components: {
+    Wireframe,
+  },
+
   data: function () {
     return {
       club_advisor: []

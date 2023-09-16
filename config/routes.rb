@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+    registrations: 'auth/registrations'
+  }
   namespace :external_coach do
     root "users#index"
     get "login" => "sessions#new", as: :login

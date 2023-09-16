@@ -19,6 +19,8 @@ gem 'kaminari'
 gem 'date_validator'
 gem 'valid_email2'
 gem 'nokogiri'
+gem 'devise', '~> 4.9', '>= 4.9.2'
+gem 'devise_token_auth', '~> 1.2', '>= 1.2.2'
 gem 'rack-cors'
 
 
