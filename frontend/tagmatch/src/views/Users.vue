@@ -6,6 +6,7 @@
             <td>{{ club_advisor.email }}</td>
         </tr>
         <button @click="toUsers">EcArticleページにいく</button>
+        <P>{{ count }}</P>
     </div>
 </template>
 
@@ -16,6 +17,11 @@ export default {
     data: function() {
         return {
             club_advisors: []
+        }
+    },
+    computed: {
+        count() {
+            return this.$store.state.count;
         }
     },
     mounted () {

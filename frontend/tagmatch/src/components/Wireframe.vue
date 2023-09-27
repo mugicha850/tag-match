@@ -22,17 +22,11 @@
 
       <v-divider class="mx-3 my-5"></v-divider>
 
-      <router-link :to="to" v-for="[icon, to] in baseLinks" :key="icon">
-        <v-icon
-          @click="onIconClick(icon)"
-          class="d-block text-center mx-auto mb-9"
-          color="blue"
-          size="28"
-          v-if="shouldDisplayIcon(icon)"
-        >
-          {{ icon }}
-        </v-icon>
-      </router-link>
+      <DisplayIcon
+        :shouldDisplayIcon="shouldDisplayIcon"
+        :onIconClick="onIconClick"
+        :baseLinks="baseLinks"
+      />
 
     </v-navigation-drawer>
 
@@ -79,95 +73,44 @@
 
 <script>
 import SideBar from './SideBar.vue';
+import DisplayIcon from './DisplayIcon.vue';
 import ArticlesPage from '@/views/ArticlesPage.vue';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiAccount } from '@mdi/js';
 import { mdiMagnify } from '@mdi/js';
 import { mdiLogin } from '@mdi/js';
 import { mdiLogout } from '@mdi/js';
-import axios from 'axios';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
-  data: () => ({
-    selectedIcon: null,
-    email: window.localStorage.getItem('uid'),
-    family_name: window.localStorage.getItem('family_name'), 
-    baseLinks: [
-      ['mdi-message-text', '/chat'],
-      ['mdi-account', '/users'],
-      ['mdi-magnify', '/settings'],
-      ['mdi-login', '/auth/sign_in'],
-      ['mdi-logout', '/auth/sign_out'],
-      // ... その他のリンク
-    ],
-    isLoggedIn: !!(
-      window.localStorage.getItem('access-token') &&
-      window.localStorage.getItem('client') &&
-      window.localStorage.getItem('uid')
-    )
-  }),
-  path: mdiAccount, mdiMagnify, mdiLogin, mdiLogout,
-  methods: {
-    onIconClick(icon) {
-      this.selectedIcon = icon;
+  setup() {
+    const store = useStore();
+    const selectedIcon = computed(() => store.state.selectedIcon);
+    const email = computed(() => store.state.email);
+    const family_name = computed(() => store.state.family_name);
+    const isLoggedIn = computed(() => store.state.isLoggedIn);
+    const baseLinks = computed(() => store.state.baseLinks);
+
+    // getters
+    const shouldDisplayIcon = store.getters.shouldDisplayIcon;
+
+    // actions
+    const logout = () => store.dispatch('logout');
+
+    const onIconClick = (icon) => {
+      store.commit('setSelectedIcon', icon);
       if (icon === 'mdi-logout') {
-        this.logout();
+        logout();
       }
-    },
-    async logout() {
-      try {
-        console.log("aaa")
-        const response = await axios.delete('http://localhost:8000/auth/sign_out',{
-          headers: {
-            uid: this.email,
-            "access-token": window.localStorage.getItem('access-token'),
-            client: window.localStorage.getItem('client')
-          }
-        });
+    };
 
-        console.log("ログアウトしました")
-        window.localStorage.removeItem('access-token')
-        window.localStorage.removeItem('client')
-        window.localStorage.removeItem('uid')
-        window.localStorage.removeItem('family_name')
-
-        // ログアウト成功時、isLoggedInをfalseにする
-        this.isLoggedIn = false;
-
-        this.email = '';
-        this.family_name = '';
-
-        localStorage.message = "ログアウトに成功しました。"
-        this.$router.push('sign_in')
-
-        console.log({response})
-        return response
-      }catch (error) {
-        console.log({error})
-      }
-    },
-    shouldDisplayIcon(icon) {
-      if (icon === 'mdi-login') return !this.isLoggedIn;
-      if (icon === 'mdi-logout') return this.isLoggedIn;
-    return true;  // その他のアイコンは常に表示
-    },
-  },
-  mounted() {
-    this.family_name = localStorage.getItem('family_name');
-    this.email = localStorage.getItem('uid');
-
-    if(localStorage.email) {
-      this.email = localStorage.email;
-      localStorage.email = '';
-    }
-    if(localStorage.family_name) {
-      this.family_name = localStorage.family_name;
-      localStorage.family_name = '';
-    }
+    return { selectedIcon, email, family_name, isLoggedIn, baseLinks, shouldDisplayIcon, onIconClick }
   },
   components: {
     SvgIcon,
-    SideBar
+    SideBar,
+    DisplayIcon
   },
 }
 </script>
