@@ -11,7 +11,7 @@
         <v-card class="mx-auto px-6 py-8" max-width="344">
         <v-form
             v-model="form"
-            @submit.prevent="onSubmit"
+            @submit.prevent="onLogin"
         >
             <v-text-field
             v-model="emailInput"
@@ -35,7 +35,7 @@
             <br>
 
             <v-btn
-            :disabled="!form"
+            :disabled="onButton"
             :loading="loading"
             block
             color="success"
@@ -73,73 +73,65 @@
 </template>
 
 <script>
-import axios from 'axios';
-  export default {
-    data: () => ({
-      form: false,
-      emailInput: null,
-      password: null,
-      loading: false,
-      message: null,
-      errorMessage: null,
-      email: window.localStorage.getItem('uid'),
-      family_name: localStorage.getItem('family_name'), 
-    }),
+import { useStore } from 'vuex';
+import { ref, computed, onMounted } from 'vue';
 
-    methods: {
-       async onSubmit () {
-        if (!this.form) return
-        this.loading = true
+export default {
+  setup() {
+    const store = useStore();
+    const form = ref(false);
+    const emailInput = ref(store.state.emailInput);
+    const password = ref(store.state.password);
+    const loading = ref(false);
+    const message = computed(() => store.state.message);
+    const errorMessage = computed(() => store.state.errorMessage);
+    const email = computed(() => store.state.email);
+    const family_name = computed(() => store.state.family_name);
+    const accessToken = computed(() => store.state.login.accessToken);
+    const client = computed(() => store.state.onLogin.client);
+    const onButton = computed(() => {
+      // formの値に応じてloadingの状態を返す
+      if (!emailInput.value || !password.value) {
+        return true;
+      }
+      return loading.value;
+    });
+    // getters
+    const shouldDisplayIcon = store.getters.shouldDisplayIcon;
 
-        setTimeout(() => (this.loading = false), 2000)
+    // actions
+    const onLogin = () => {
+      store.dispatch('onLogin');
+      console.log('Login button clicked');
+      console.log(form.value);
+      console.log(loading.value);
+    };
+    // メールアドレスのバリデーションルール
+    const emailRules = ref(v => {
+      if (!v) return 'メールアドレスを入力してください。';
+      if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(v)) return true;
+      return '正しいメールアドレスを入力してください。';
+    });
 
-        try {
-          const response = await axios.post('http://localhost:8000/auth/sign_in', { 
-            email: this.emailInput,
-            password: this.password
-          })
+    // パスワードのバリデーションルール
+    const passwordRules = ref(v => {
+      return !!v || 'パスワードを入力してください。';
+    });
 
-          const accessToken = response.headers['access-token'];
-          const client = response.headers['client'];
-          const uid = response.headers['uid'];
-          const family_name = response.data.data['family_name'];
 
-          if (accessToken && client && uid) {
-            window.localStorage.setItem('access-token', accessToken);
-            window.localStorage.setItem('client', client);
-            window.localStorage.setItem('uid', uid);
-            window.localStorage.setItem('family_name', family_name);
-
-            this.$emit('updateUser', { family_name, email: uid });
-          }
-
-          console.log({ response })
-
-          this.$router.push('/articles')
-          return response
-          
-        } catch (error) {
-          console.error("Error:", error.response.data);
-          localStorage.errorMessage = "ログインに失敗しました。"
-          
-        }
-      },
-      emailRules (v) {
-        if (!v) return 'メールアドレスを入力してください。';
-        if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(v)) return true;
-        return '正しいメールアドレスを入力してください。';
-      },
-      passwordRules (v) {
-        return !!v || 'パスワードを入力してください。'
-      },
-    },
-    mounted() {
-      if(localStorage.message) {
-        this.message = localStorage.message
+    onMounted(() => {
+      if (localStorage.message) {
+        // Composition API内で`this`は使用されません。
+        // 代わりに、直接変数やリアクティブな参照を使用します。
+        // この場合、メッセージ変数が必要です。
+        state.message = localStorage.message
         localStorage.message = ''
       }
-    }
-  }
+    });
+
+    return { form, emailInput, password, loading, message, errorMessage, email, family_name, accessToken, client, onButton, shouldDisplayIcon, onLogin, emailRules, passwordRules};
+  },
+}
 </script>
 <style>
 #signup.title {

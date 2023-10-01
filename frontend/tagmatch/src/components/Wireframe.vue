@@ -87,9 +87,9 @@ export default {
   setup() {
     const store = useStore();
     const selectedIcon = computed(() => store.state.selectedIcon);
-    const email = computed(() => store.state.email);
-    const family_name = computed(() => store.state.family_name);
-    const isLoggedIn = computed(() => store.state.isLoggedIn);
+    const email = computed(() => store.state.logout.email);
+    const family_name = computed(() => store.state.logout.family_name);
+    const isLoggedIn = computed(() => store.state.logout.isLoggedIn);
     const baseLinks = computed(() => store.state.baseLinks);
 
     // getters

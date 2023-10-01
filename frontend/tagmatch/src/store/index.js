@@ -1,11 +1,11 @@
-import { createStore } from 'vuex';
-import { logout } from './modules/logout';
+import { createStore } from 'vuex'
+import logout from './modules/logout';
+import login from '../store/modules/login';
 
 // 新しいストアインスタンスを作成します
 const store = createStore({
   state: {
-    selectedIcon: null,    
-
+    selectedIcon: null,
     baseLinks: [
       ['mdi-message-text', '/chat'],
       ['mdi-account', '/users'],
@@ -18,18 +18,18 @@ const store = createStore({
     setSelectedIcon(state, icon) {
       state.selectedIcon = icon;
     },
-
   },
 
   getters: {
-    shouldDisplayIcon: (rootState) => (icon) => {
-      if (icon === 'mdi-login') return !rootState.logout.isLoggedIn;
-      if (icon === 'mdi-logout') return rootState.logout.isLoggedIn;
+    shouldDisplayIcon: (state) => (icon) => {
+      if (icon === 'mdi-login') return !state.logout.isLoggedIn;
+      if (icon === 'mdi-logout') return state.logout.isLoggedIn;
       return true;
     },  
   },
   modules: {
-    logout
+    logout,
+    login,
   }
 });
 
